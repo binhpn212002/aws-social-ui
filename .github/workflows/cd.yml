@@ -2,7 +2,7 @@ name: CD
 
 on:
   workflow_run:
-    workflows: ["CI"]
+    workflows: ['CI']
     types:
       - completed
 
@@ -11,7 +11,6 @@ jobs:
     if: >
       github.event.workflow_run.conclusion == 'success' &&
       github.event.workflow_run.head_branch == 'master'
-
     runs-on: ubuntu-latest
 
     steps:
@@ -23,15 +22,9 @@ jobs:
           key: ${{ secrets.VPS_SSH_KEY }}
           script: |
             cd ~/www/aws/aws-social-ui
-
             git fetch origin master
-
             git pull origin master
-
             npm install
-
             npm run build
-
-            pm2 restart aws-social-api
-
+            pm2 restart aws-social-ui
             pm2 status
